@@ -9,6 +9,8 @@ autopep8 = "*"
 
 [packages]
 Django = "~=2.2"
+djangorestframework = "~=3.11"
+djangorestframework-simplejwt = "~=4.4"
 
 [requires]
 python_version = "3.7"
