@@ -16,7 +16,7 @@ class Ticket(models.Model):
     description = models.TextField(_('description'))
     status = models.CharField(_('status'), max_length=50, choices=STATUS_CHOICES)
     created = models.DateTimeField(_('created'), default=timezone.now)
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name=_('user'))
+    creator = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name=_('creator'))
 
     def __str__(self):
         return self.title
