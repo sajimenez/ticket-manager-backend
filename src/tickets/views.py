@@ -1,23 +1,25 @@
-from rest_framework import viewsets, mixins
+from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 
 from .serializers import TicketSerializer
 from .models import Ticket
 
 
-class TicketViewSet(mixins.CreateModelMixin,
-                    mixins.ListModelMixin,
-                    mixins.UpdateModelMixin,
-                    viewsets.GenericViewSet):
-    queryset = Ticket.objects.all()
+class ListCreateTicketAPIView(generics.ListCreateAPIView):
     serializer_class = TicketSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
 
     def get_queryset(self):
+        queryset = Ticket.objects.all()
         status = self.request.query_params.get('status', None)
         if status:
-            return self.queryset.filter(status=status)
-        return self.queryset
+            return queryset.filter(status=status)
+        return queryset
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
+
+
+class UpdateTicketAPIView(generics.UpdateAPIView):
+    serializer_class = TicketSerializer
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
