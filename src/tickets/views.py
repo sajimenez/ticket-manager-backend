@@ -20,6 +20,7 @@ class ListCreateTicketAPIView(generics.ListCreateAPIView):
         serializer.save(creator=self.request.user)
 
 
-class UpdateTicketAPIView(generics.UpdateAPIView):
+class RetrieveUpdateTicketAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = TicketSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
+    queryset = Ticket.objects.all()
